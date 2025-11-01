@@ -2,7 +2,7 @@
 HTTP Accept-Encoding header parsing and negotiation utilities.
 """
 from functools import lru_cache
-from typing import Literal
+from typing import Literal, Union, Tuple
 
 # Defines the internal priority for encodings we recognize.
 # Lower numbers are preferred when q-factors are equal.
@@ -18,7 +18,7 @@ CODING_PRIORITIES: dict[str, int] = {
 SupportedEncoding = Literal["zstd", "gzip", "identity"]
 
 
-def parse_part(part: str) -> tuple[float, int, str] | None:
+def parse_part(part: str) -> Union[Tuple[float, int, str], None]:
     """
     Parses a single part of the 'Accept-Encoding' header (e.g., "gzip;q=0.8").
     Returns a tuple of (q-factor, priority, encoding_name) or None if invalid.
